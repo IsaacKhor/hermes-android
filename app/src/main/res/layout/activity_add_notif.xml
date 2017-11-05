@@ -1,115 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.isaackhor.hermes.viewAddNotif.AddNotifActivity">
 
-    <TextView
-        android:id="@+id/label_title"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:labelFor="@+id/text_title"
-        android:text="@string/label_title"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_title"
-        app:layout_constraintEnd_toStartOf="@+id/text_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_title" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/text_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/label_title"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/add_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Toolbar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:id="@+id/label_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:labelFor="@+id/text_content"
-        android:text="@string/label_content"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/label_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/text_content"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:singleLine="false"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_title"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/label_targets"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/label_targets"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/label_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_targets" />
+            <TextView
+                android:labelFor="@+id/add_label_title"
+                android:id="@+id/add_label_title"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/label_title"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/add_edit_title"
+                app:layout_constraintEnd_toStartOf="@+id/add_edit_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/add_edit_title" />
 
-    <TextView
-        android:id="@+id/edit_targets"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:text=""
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_content"
-        app:layout_constraintTop_toBottomOf="@+id/text_content" />
+            <EditText
+                android:id="@+id/add_edit_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:inputType="text"
+                android:singleLine="true"
+                android:text=""
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/add_label_title"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/label_groups"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/label_topics"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/label_targets"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_topics" />
+            <TextView
+                android:id="@+id/add_label_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:labelFor="@+id/content_text"
+                android:text="@string/label_content"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/add_label_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/add_edit_content" />
 
-    <TextView
-        android:id="@+id/edit_topics"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:text=""
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/edit_targets"
-        app:layout_constraintTop_toBottomOf="@+id/edit_targets" />
+            <EditText
+                android:gravity="top|start"
+                android:id="@+id/add_edit_content"
+                android:layout_width="0dp"
+                android:layout_height="240dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:text=""
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/add_edit_title"
+                app:layout_constraintTop_toBottomOf="@+id/add_edit_title" />
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/add_label_targets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/label_targets"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/add_label_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/add_edit_targets" />
+
+            <TextView
+                android:id="@+id/add_edit_targets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/add_edit_title"
+                app:layout_constraintTop_toBottomOf="@+id/add_edit_content" />
+
+            <TextView
+                android:id="@+id/add_label_groups"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/label_topics"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/add_label_targets"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/add_edit_topics" />
+
+            <TextView
+                android:id="@+id/add_edit_topics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/add_edit_targets"
+                app:layout_constraintTop_toBottomOf="@+id/add_edit_targets" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

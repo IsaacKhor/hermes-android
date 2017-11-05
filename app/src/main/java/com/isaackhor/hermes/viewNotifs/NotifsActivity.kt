@@ -59,7 +59,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
             swipeRefreshView.isRefreshing = isLoading })
 
     // Toolbar
-    setSupportActionBar(findViewById(R.id.toolbar))
+    setSupportActionBar(findViewById(R.id.main_toolbar))
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {

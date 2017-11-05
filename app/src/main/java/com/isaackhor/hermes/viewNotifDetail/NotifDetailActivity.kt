@@ -2,17 +2,14 @@ package com.isaackhor.hermes.viewNotifDetail
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.TextView
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.source.NotifsRepo
-import com.isaackhor.hermes.source.TestingRepo
 
 class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
   private lateinit var editTitleView: TextView
@@ -26,13 +23,13 @@ class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_notif_detail)
 
-    editTitleView = findViewById(R.id.text_title)
-    contentView = findViewById(R.id.text_content)
-    targetsView = findViewById(R.id.edit_targets)
-    topicsView = findViewById(R.id.edit_topics)
+    editTitleView = findViewById(R.id.detail_text_title)
+    contentView = findViewById(R.id.detail_text_content)
+    targetsView = findViewById(R.id.detail_edit_targets)
+    topicsView = findViewById(R.id.detail_edit_topics)
 
     // Action bar
-    val actionbar = findViewById<Toolbar>(R.id.toolbar)
+    val actionbar = findViewById<Toolbar>(R.id.detail_toolbar)
     setSupportActionBar(actionbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
