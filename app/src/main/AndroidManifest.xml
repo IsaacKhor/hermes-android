@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewNotifs.NotifsActivity">
+        <activity android:name="com.isaackhor.hermes.views.viewNotifs.NotifsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewNotifDetail.NotifDetailActivity" />
-        <activity android:name=".viewAddNotif.AddNotifActivity">
+        <activity android:name="com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity" />
+        <activity android:name="com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

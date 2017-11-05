@@ -1,4 +1,4 @@
-package com.isaackhor.hermes.viewNotifs
+package com.isaackhor.hermes.views.viewNotifs
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
@@ -12,11 +12,11 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.isaackhor.hermes.viewAddNotif.AddNotifActivity
+import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.source.NotifsRepo
-import com.isaackhor.hermes.viewNotifDetail.NotifDetailActivity
+import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
 import kotlinx.collections.immutable.immutableListOf
 import kotlinx.collections.immutable.toImmutableList
 

@@ -1,4 +1,4 @@
-package com.isaackhor.hermes.viewAddNotif
+package com.isaackhor.hermes.views.viewAddNotif
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel

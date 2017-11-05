@@ -1,10 +1,8 @@
-package com.isaackhor.hermes.viewNotifDetail
+package com.isaackhor.hermes.views.viewNotifDetail
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.model.Notif
-import com.isaackhor.hermes.source.DataSource
 import com.isaackhor.hermes.source.NotifsRepo
 
 

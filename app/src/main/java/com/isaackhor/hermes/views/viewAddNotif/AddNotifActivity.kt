@@ -1,11 +1,8 @@
-package com.isaackhor.hermes.viewAddNotif
+package com.isaackhor.hermes.views.viewAddNotif
 
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText

@@ -1,4 +1,4 @@
-package com.isaackhor.hermes.viewNotifDetail
+package com.isaackhor.hermes.views.viewNotifDetail
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
