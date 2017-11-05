@@ -2,6 +2,7 @@ package com.isaackhor.hermes.viewNotifs
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTopic
 import com.isaackhor.hermes.source.NotifsRepo
@@ -25,6 +26,7 @@ class NotifsViewModel(): ViewModel() {
   init {
     filterMode.value = FilterMode.TARGET
     repo?.getNotifs()?.success { n -> notifs.value = n }
+    dataLoading.value = false
   }
 
   fun loadNotifs(showLoadingUi: Boolean, forceFetch: Boolean) {
@@ -32,10 +34,11 @@ class NotifsViewModel(): ViewModel() {
     if (forceFetch) repo?.fetchNotifs()?.fail { e -> snackbarMsg.value = e.message }
 
     repo?.getNotifs()?.success { res ->
+      Log.i("NotifsViewModel", "Loading data success")
       notifs.postValue(res)
       // TODO implement filtering
       filteredNotifs.postValue(res)
-      dataLoading.value = false
+      dataLoading.postValue(false)
     }
   }
 

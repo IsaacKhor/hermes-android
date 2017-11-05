@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -16,7 +16,6 @@ import com.isaackhor.hermes.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.source.NotifsRepo
-import com.isaackhor.hermes.source.TestingRepo
 import com.isaackhor.hermes.viewNotifDetail.NotifDetailActivity
 import kotlinx.collections.immutable.immutableListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -24,7 +23,7 @@ import kotlinx.collections.immutable.toImmutableList
 class NotifsActivity : AppCompatActivity(), LifecycleOwner {
   private lateinit var viewModel: NotifsViewModel
   private lateinit var recyclerView: RecyclerView
-  private lateinit var addNotifFab: FloatingActionButton
+  private lateinit var swipeRefreshView: SwipeRefreshLayout
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -39,18 +38,28 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     viewModel.newNotifEvent.observe(this, Observer { showAddNotifUi() })
 
     // Recycler view
-    recyclerView = findViewById(R.id.notifsList)
+    recyclerView = findViewById(R.id.notifs_recycler_view)
     recyclerView.setHasFixedSize(true)
     recyclerView.layoutManager = LinearLayoutManager(this)
     val adapter = NotifsAdapter(immutableListOf(Notif.TEST_NOTIF), viewModel)
     recyclerView.adapter = adapter
 
     viewModel.notifs.observe(this,
-        Observer { new -> if (new != null) adapter.updateNotifsList(new.toImmutableList()) })
+        Observer { new ->
+          if (new != null)
+            adapter.updateNotifsList(new.toImmutableList()) })
 
-    // Add notif button
-    addNotifFab = findViewById(R.id.addNotifFab)
-    addNotifFab.setOnClickListener { viewModel.addNewNotif() }
+    // Swipe refresh view
+    swipeRefreshView = findViewById(R.id.refresh_notifs_view)
+    swipeRefreshView.setOnRefreshListener { viewModel.loadNotifs(true, true) }
+
+    viewModel.dataLoading.observe(this,
+        Observer { isLoading ->
+          if (isLoading != null)
+            swipeRefreshView.isRefreshing = isLoading })
+
+    // Toolbar
+    setSupportActionBar(findViewById(R.id.toolbar))
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
