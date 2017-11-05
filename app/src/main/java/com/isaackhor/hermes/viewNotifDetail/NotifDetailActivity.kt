@@ -31,9 +31,10 @@ class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
     // Action bar
     val actionbar = findViewById<Toolbar>(R.id.detail_toolbar)
     setSupportActionBar(actionbar)
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    supportActionBar?.setDisplayShowHomeEnabled(true)
-
+    supportActionBar?.apply {
+      setDisplayHomeAsUpEnabled(true)
+      setDisplayShowHomeEnabled(true)
+    }
 
     val id = intent.getIntExtra(NOTIF_ID_DETAIL, 0)
 
