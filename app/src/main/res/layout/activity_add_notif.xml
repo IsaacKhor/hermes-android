@@ -25,116 +25,76 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:labelFor="@+id/add_label_title"
                 android:id="@+id/add_label_title"
-                android:layout_width="80dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:labelFor="@+id/add_label_title"
                 android:text="@string/label_title"
-                android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/add_edit_title"
-                app:layout_constraintEnd_toStartOf="@+id/add_edit_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/add_edit_title" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <EditText
                 android:id="@+id/add_edit_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:ems="10"
-                android:inputType="text"
-                android:singleLine="true"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
                 android:text=""
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/add_label_title"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:id="@+id/add_label_content"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:labelFor="@+id/content_text"
                 android:text="@string/label_content"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/add_label_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/add_edit_content" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <EditText
-                android:gravity="top|start"
                 android:id="@+id/add_edit_content"
-                android:layout_width="0dp"
-                android:layout_height="240dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:ems="10"
+                android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:singleLine="false"
                 android:text=""
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/add_edit_title"
-                app:layout_constraintTop_toBottomOf="@+id/add_edit_title" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:id="@+id/add_label_targets"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="@string/label_targets"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/add_label_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/add_edit_targets" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/add_edit_targets"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/add_edit_title"
-                app:layout_constraintTop_toBottomOf="@+id/add_edit_content" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/add_label_groups"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="@string/label_topics"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/add_label_targets"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/add_edit_topics" />
+                android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
                 android:id="@+id/add_edit_topics"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text=""
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/add_edit_targets"
-                app:layout_constraintTop_toBottomOf="@+id/add_edit_targets" />
-        </android.support.constraint.ConstraintLayout>
+                android:text="" />
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>
