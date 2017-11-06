@@ -17,13 +17,12 @@ import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
+import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.collections.immutable.immutableListOf
 import kotlinx.collections.immutable.toImmutableList
 
 class NotifsActivity : AppCompatActivity(), LifecycleOwner {
   private lateinit var viewModel: NotifsViewModel
-  private lateinit var recyclerView: RecyclerView
-  private lateinit var swipeRefreshView: SwipeRefreshLayout
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -38,11 +37,10 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     viewModel.newNotifEvent.observe(this, Observer { showAddNotifUi() })
 
     // Recycler view
-    recyclerView = findViewById(R.id.notifs_recycler_view)
-    recyclerView.setHasFixedSize(true)
-    recyclerView.layoutManager = LinearLayoutManager(this)
+    nt_notifsList.setHasFixedSize(true)
+    nt_notifsList.layoutManager = LinearLayoutManager(this)
     val adapter = NotifsAdapter(immutableListOf(Notif.TEST_NOTIF), viewModel)
-    recyclerView.adapter = adapter
+    nt_notifsList.adapter = adapter
 
     viewModel.notifs.observe(this,
         Observer { new ->
@@ -50,13 +48,12 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
             adapter.updateNotifsList(new.toImmutableList()) })
 
     // Swipe refresh view
-    swipeRefreshView = findViewById(R.id.refresh_notifs_view)
-    swipeRefreshView.setOnRefreshListener { viewModel.loadNotifs(true, true) }
+    nt_swipeRefresh.setOnRefreshListener { viewModel.loadNotifs(true, true) }
 
     viewModel.dataLoading.observe(this,
         Observer { isLoading ->
           if (isLoading != null)
-            swipeRefreshView.isRefreshing = isLoading })
+            nt_swipeRefresh.isRefreshing = isLoading })
 
     // Toolbar
     setSupportActionBar(findViewById(R.id.main_toolbar))
