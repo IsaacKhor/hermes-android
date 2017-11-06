@@ -40,7 +40,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <EditText
-                android:id="@+id/add_edit_title"
+                android:id="@+id/add_editTitle"
                 android:layout_below="@id/add_label_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
 
             <TextView
                 android:id="@+id/add_label_content"
-                android:layout_below="@id/add_edit_title"
+                android:layout_below="@id/add_editTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@+id/content_text"
@@ -61,7 +61,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <EditText
-                android:id="@+id/add_edit_content"
+                android:id="@+id/add_editContent"
                 android:layout_below="@id/add_label_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
 
             <TextView
                 android:id="@+id/add_label_targets"
-                android:layout_below="@id/add_edit_content"
+                android:layout_below="@id/add_editContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_targets"

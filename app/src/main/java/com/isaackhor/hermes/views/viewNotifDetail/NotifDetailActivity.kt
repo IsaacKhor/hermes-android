@@ -7,26 +7,16 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.widget.TextView
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.source.NotifsRepo
+import kotlinx.android.synthetic.main.activity_notif_detail.*
 
 class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
-  private lateinit var editTitleView: TextView
-  private lateinit var contentView: TextView
-  private lateinit var targetsView: TextView
-  private lateinit var topicsView: TextView
-
   private lateinit var viewModel: NotifDetailViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_notif_detail)
-
-    editTitleView = findViewById(R.id.detail_text_title)
-    contentView = findViewById(R.id.detail_text_content)
-    targetsView = findViewById(R.id.detail_edit_targets)
-    topicsView = findViewById(R.id.detail_edit_topics)
 
     // Action bar
     val actionbar = findViewById<Toolbar>(R.id.detail_toolbar)
@@ -43,10 +33,10 @@ class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
     viewModel.setId(id)
     viewModel.notif.observe(this, Observer { new ->
       if (new != null) {
-        editTitleView.text = new.title
-        contentView.text = new.content
-        targetsView.text = new.targets.map { e -> e.name }.reduceRight {a,b -> a+'\n'+b}
-        topicsView.text = new.topics.map {e -> e.name }.reduceRight {a,b -> a+'\n'+b}
+        dt_textTitle.text = new.title
+        dt_textContent.text = new.content
+        dt_editTargets.text = new.targets.map { e -> e.name }.reduceRight { a, b -> a+'\n'+b}
+        dt_editTopics.text = new.topics.map { e -> e.name }.reduceRight { a, b -> a+'\n'+b}
       }
     })
   }

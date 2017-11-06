@@ -40,7 +40,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/detail_text_title"
+                android:id="@+id/dt_textTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -59,7 +59,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/detail_text_content"
+                android:id="@+id/dt_textContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -78,7 +78,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/detail_edit_targets"
+                android:id="@+id/dt_editTargets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -95,7 +95,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/detail_edit_topics"
+                android:id="@+id/dt_editTopics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""

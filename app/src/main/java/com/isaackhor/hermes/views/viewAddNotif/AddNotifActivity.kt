@@ -5,23 +5,17 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.utils.Utils
+import kotlinx.android.synthetic.main.activity_add_notif.*
 
 class AddNotifActivity : AppCompatActivity() {
-  private lateinit var editTitle: EditText
-  private lateinit var editContent: EditText
-
   private lateinit var viewModel: AddNotifViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_add_notif)
-
-    editTitle = findViewById(R.id.add_edit_title)
-    editContent = findViewById(R.id.add_edit_content)
 
     setSupportActionBar(findViewById(R.id.add_toolbar))
     supportActionBar?.apply {
@@ -33,8 +27,8 @@ class AddNotifActivity : AppCompatActivity() {
     viewModel = ViewModelProviders.of(this).get(AddNotifViewModel::class.java)
     viewModel.setRepo(NotifsRepo.TESTING)
 
-    Utils.onEditTextChanged(editTitle) { s -> viewModel.title.value = s }
-    Utils.onEditTextChanged(editContent) { s -> viewModel.content.value = s }
+    Utils.onEditTextChanged(add_editTitle) { s -> viewModel.title.value = s }
+    Utils.onEditTextChanged(add_editContent) { s -> viewModel.content.value = s }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
