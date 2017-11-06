@@ -9,21 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.isaackhor.hermes.views.viewNotifs.NotifsActivity">
+        <activity android:name=".views.viewNotifs.NotifsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity" />
-        <activity android:name="com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity">
+        <activity android:name=".views.viewNotifDetail.NotifDetailActivity" />
+        <activity android:name=".views.viewAddNotif.AddNotifActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.viewSelectTargetTopic.SelectTopicTargetActivity"></activity>
     </application>
 
 </manifest>
