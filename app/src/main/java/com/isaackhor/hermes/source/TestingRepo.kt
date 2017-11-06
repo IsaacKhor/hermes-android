@@ -3,6 +3,7 @@ package com.isaackhor.hermes.source
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTopic
 import com.isaackhor.hermes.model.NotifTarget
+import io.reactivex.Single
 import kotlinx.collections.immutable.*
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.task
@@ -17,6 +18,8 @@ class TestingRepo : DataSource {
   private var notifs = mutableListOf<Notif>()
 
   private val notifsMap: ImmutableMap<Int, Notif>
+  private val targetsMap: ImmutableMap<Int, NotifTarget>
+  private val topicsMap: ImmutableMap<Int, NotifTopic>
 
   init {
     for (i in 0..10) generateTarget()
@@ -24,6 +27,8 @@ class TestingRepo : DataSource {
     for (i in 0..50) generateNotif(topics, targets)
 
     notifsMap = immutableMapOf(*notifs.map { n -> Pair(n.id, n) }.toTypedArray())
+    targetsMap= immutableMapOf(*targets.map { n -> Pair(n.id, n) }.toTypedArray())
+    topicsMap = immutableMapOf(*topics.map { n -> Pair(n.id, n) }.toTypedArray())
   }
 
   private fun generateNotif(topics: List<NotifTopic>, targets: List<NotifTarget>): Notif {
@@ -64,6 +69,12 @@ class TestingRepo : DataSource {
   override fun getNotif(id: Int): Promise<Notif?, Exception> = task { notifsMap[id] }
   override fun addNotif(notif: Notif): Promise<Notif, Exception> = task { notif }
   override fun fetchNotifs(): Promise<List<Notif>, Exception> = task { notifs }
+  override fun getTargets(): Single<List<NotifTarget>> = Single.fromCallable { targets }
+  override fun getTarget(id: Int): Single<NotifTarget> = Single.fromCallable { targetsMap[id] }
+  override fun addTarget(target: NotifTarget): Single<NotifTarget> = Single.fromCallable { target }
+  override fun getTopics(): Single<List<NotifTopic>> = Single.fromCallable { topics }
+  override fun getTopic(id: Int): Single<NotifTopic> = Single.fromCallable { topicsMap[id] }
+  override fun addTopic(topic: NotifTopic): Single<NotifTopic> = Single.fromCallable { topic }
 
   companion object {
     val INSTANCE = TestingRepo()

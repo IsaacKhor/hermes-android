@@ -2,6 +2,9 @@ package com.isaackhor.hermes.source
 
 import android.util.Log
 import com.isaackhor.hermes.model.Notif
+import com.isaackhor.hermes.model.NotifTarget
+import com.isaackhor.hermes.model.NotifTopic
+import io.reactivex.Single
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.deferred
 
@@ -9,6 +12,30 @@ open class NotifsRepo(
     private val localSource: DataSource,
     private val remoteSource: DataSource
 ) : DataSource {
+  override fun getTargets(): Single<List<NotifTarget>> {
+    return localSource.getTargets()
+  }
+
+  override fun getTarget(id: Int): Single<NotifTarget> {
+    return localSource.getTarget(id)
+  }
+
+  override fun addTarget(target: NotifTarget): Single<NotifTarget> {
+    return localSource.addTarget(target)
+  }
+
+  override fun getTopics(): Single<List<NotifTopic>> {
+    return localSource.getTopics()
+  }
+
+  override fun getTopic(id: Int): Single<NotifTopic> {
+    return localSource.getTopic(id)
+  }
+
+  override fun addTopic(topic: NotifTopic): Single<NotifTopic> {
+    return localSource.addTopic(topic)
+  }
+
   private val cache = mutableMapOf<Int, Notif>()
   var isCacheDirty = true
 
