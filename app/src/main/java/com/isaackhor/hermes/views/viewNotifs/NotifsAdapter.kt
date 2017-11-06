@@ -14,7 +14,8 @@ class NotifsAdapter(
     private var viewModel: NotifsViewModel
 ) : RecyclerView.Adapter<NotifsAdapter.NotifViewHolder>() {
 
-  override fun onBindViewHolder(holder: NotifViewHolder, position: Int) = holder.bind(position)
+  override fun onBindViewHolder(holder: NotifViewHolder, position: Int) =
+      holder.bind(notifs[position].title)
   override fun getItemCount(): Int = notifs.size
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotifViewHolder {
@@ -39,12 +40,7 @@ class NotifsAdapter(
       notifNameView.setOnClickListener(this)
     }
 
-    override fun onClick(v: View) {
-      onClickListener(adapterPosition)
-    }
-
-    fun bind(index: Int) {
-      notifNameView.text = index.toString()
-    }
+    override fun onClick(v: View) = onClickListener(adapterPosition)
+    fun bind(title: String) { notifNameView.text = title }
   }
 }
