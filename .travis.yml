@@ -7,10 +7,14 @@ android:
     - tools
 
     # The BuildTools version used by your project
-    - build-tools-26.0.0
+    - build-tools-26.0.2
 
     # The SDK version used to compile your project
     - android-26
 
   license:
     - 'android-sdk-license-.+'
+
+before_script:
+  - mkdir -p "$ANDROID_HOME/licenses"
+  - cp ./android-licenses/ "$ANDROID_HOME/licenses/"
