@@ -17,7 +17,7 @@ class NotifDetailViewModel() : ViewModel() {
 
   fun setId(id: Int) {
     notifId = id
-    repo?.getNotif(id)?.success { n ->
+    repo?.getNotif(id)?.subscribe { n ->
       notif.postValue(n)
     }
   }

@@ -82,7 +82,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/add_edit_targets"
+                android:id="@+id/add_editTargets"
                 android:layout_below="@id/add_label_targets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,14 +90,14 @@
 
             <TextView
                 android:id="@+id/add_label_topics"
-                android:layout_below="@id/add_edit_targets"
+                android:layout_below="@id/add_editTargets"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/label_topics"
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/add_edit_topics"
+                android:id="@+id/add_editTopics"
                 android:layout_below="@id/add_label_topics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
 
             <Button
                 android:id="@+id/add_btn_taget_group"
-                android:layout_below="@id/add_edit_topics"
+                android:layout_below="@id/add_editTopics"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

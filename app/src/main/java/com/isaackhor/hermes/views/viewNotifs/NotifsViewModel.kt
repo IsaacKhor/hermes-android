@@ -25,15 +25,16 @@ class NotifsViewModel(): ViewModel() {
 
   init {
     filterMode.value = FilterMode.TARGET
-    repo?.getNotifs()?.success { n -> notifs.value = n }
+    repo?.getNotifs()?.subscribe { n -> notifs.value = n }
     dataLoading.value = false
   }
 
   fun loadNotifs(showLoadingUi: Boolean, forceFetch: Boolean) {
     if (showLoadingUi) dataLoading.value = true
-    if (forceFetch) repo?.fetchNotifs()?.fail { e -> snackbarMsg.value = e.message }
+    //TODO setup snackbar message on error
+//    if (forceFetch) repo?.fetchRemote()?.subscribe() { _ -> snackbarMsg.value = "Error" }
 
-    repo?.getNotifs()?.success { res ->
+    repo?.getNotifs()?.subscribe { res ->
       Log.i("NotifsViewModel", "Loading data success")
       notifs.postValue(res)
       // TODO implement filtering

@@ -5,10 +5,16 @@ import com.isaackhor.hermes.model.NotifTopic
 import com.isaackhor.hermes.model.NotifTarget
 import io.reactivex.Single
 import kotlinx.collections.immutable.*
-import nl.komponents.kovenant.Promise
-import nl.komponents.kovenant.task
 
 class TestingRepo : DataSource {
+  override fun addNotif(title: String, content: String, targets: List<NotifTarget>,
+                        topics: List<NotifTopic>): Single<Notif> =
+      Single.fromCallable { notifsMap[5] }
+  override fun addTarget(title: String): Single<NotifTarget> = Single.fromCallable { targetsMap[5] }
+  override fun addTopic(title: String, targets: List<NotifTarget>): Single<NotifTopic> =
+      Single.fromCallable { topicsMap[5] }
+  override fun fetchRemote(): Single<Unit> = Single.fromCallable { Unit }
+
   private var targetId = 0
   private var topicId = 0
   private var notifId = 0
@@ -65,16 +71,12 @@ class TestingRepo : DataSource {
     return ret.toImmutableList()
   }
 
-  override fun getNotifs(): Promise<List<Notif>, Exception> = task { notifs }
-  override fun getNotif(id: Int): Promise<Notif?, Exception> = task { notifsMap[id] }
-  override fun addNotif(notif: Notif): Promise<Notif, Exception> = task { notif }
-  override fun fetchNotifs(): Promise<List<Notif>, Exception> = task { notifs }
+  override fun getNotifs(): Single<List<Notif>> = Single.fromCallable { notifs }
+  override fun getNotif(id: Int): Single<Notif> = Single.fromCallable { notifsMap[id] }
   override fun getTargets(): Single<List<NotifTarget>> = Single.fromCallable { targets }
   override fun getTarget(id: Int): Single<NotifTarget> = Single.fromCallable { targetsMap[id] }
-  override fun addTarget(target: NotifTarget): Single<NotifTarget> = Single.fromCallable { target }
   override fun getTopics(): Single<List<NotifTopic>> = Single.fromCallable { topics }
   override fun getTopic(id: Int): Single<NotifTopic> = Single.fromCallable { topicsMap[id] }
-  override fun addTopic(topic: NotifTopic): Single<NotifTopic> = Single.fromCallable { topic }
 
   companion object {
     val INSTANCE = TestingRepo()

@@ -1,60 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.isaackhor.hermes.views.viewSelectTargetTopic.SelectTTActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.isaackhor.hermes.views.viewSelectTargetTopic.SelectTTActivity">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/select_tt_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/Toolbar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </android.support.design.widget.AppBarLayout>
-
-        <TextView
-            android:id="@+id/stt.label_targets"
-            android:layout_margin="16dp"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/select_tt_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_targets"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Toolbar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
 
-        <ListView
-            android:id="@+id/stt.list_targets"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </ListView>
+    <ListView
+        android:id="@+id/stt_listTargets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/stt.label_topics"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/label_topics"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-        <ListView
-            android:id="@+id/stt.list_topics"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

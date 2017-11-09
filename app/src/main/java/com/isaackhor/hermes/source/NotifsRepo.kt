@@ -12,6 +12,19 @@ open class NotifsRepo(
     private val localSource: DataSource,
     private val remoteSource: DataSource
 ) : DataSource {
+  override fun getNotifs(): Single<List<Notif>> {
+    return localSource.getNotifs()
+  }
+
+  override fun getNotif(id: Int): Single<Notif> {
+    return localSource.getNotif(id)
+  }
+
+  override fun addNotif(title: String, content: String,
+                        targets: List<NotifTarget>, topics: List<NotifTopic>): Single<Notif> {
+    return localSource.addNotif(title, content, targets, topics)
+  }
+
   override fun getTargets(): Single<List<NotifTarget>> {
     return localSource.getTargets()
   }
@@ -20,8 +33,8 @@ open class NotifsRepo(
     return localSource.getTarget(id)
   }
 
-  override fun addTarget(target: NotifTarget): Single<NotifTarget> {
-    return localSource.addTarget(target)
+  override fun addTarget(title: String): Single<NotifTarget> {
+    return localSource.addTarget(title)
   }
 
   override fun getTopics(): Single<List<NotifTopic>> {
@@ -32,52 +45,14 @@ open class NotifsRepo(
     return localSource.getTopic(id)
   }
 
-  override fun addTopic(topic: NotifTopic): Single<NotifTopic> {
-    return localSource.addTopic(topic)
+  override fun addTopic(title: String, targets: List<NotifTarget>): Single<NotifTopic> {
+    return localSource.addTopic(title, targets)
   }
 
-  private val cache = mutableMapOf<Int, Notif>()
-  var isCacheDirty = true
-
-  override fun getNotifs(): Promise<List<Notif>, Exception> {
-    return localSource.getNotifs()
-//    val deferred = deferred<List<Notif>, Exception>()
-//
-//    if (!isCacheDirty && cache.isNotEmpty()) deferred.resolve(cache.values.toList())
-//
-//    // Load from remote
-//    refreshCacheIfDirty()
-//
-//    // Load from local source
-//    localSource.getNotifs().success { res ->
-//      res.forEach { r -> cache.put(r.id, r) }
-//      deferred.resolve(res)
-//    } fail { e ->
-//      deferred.reject(e)
-//    }
-//
-//    return deferred.promise
+  override fun fetchRemote(): Single<Unit> {
+    return localSource.fetchRemote()
   }
 
-  override fun getNotif(id: Int): Promise<Notif?, Exception> {
-    return localSource.getNotif(id)
-  }
-
-  override fun addNotif(notif: Notif): Promise<Notif, Exception> {
-    return localSource.addNotif(notif)
-  }
-
-  override fun fetchNotifs(): Promise<List<Notif>, Exception> {
-    return localSource.fetchNotifs()
-  }
-
-  fun refreshCacheIfDirty() {
-    if (isCacheDirty) {
-      fetchNotifs()
-          .success { res -> res.forEach { r -> cache.put(r.id, r) } }
-          .fail { Log.i("NotifsRepo", "Failed to fetch remote data") }
-    }
-  }
 
   companion object {
     val TESTING = NotifsRepo(TestingRepo.INSTANCE, TestingRepo.INSTANCE)

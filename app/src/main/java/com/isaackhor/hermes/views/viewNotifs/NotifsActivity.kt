@@ -80,7 +80,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     }
     val intent = Intent(this, NotifDetailActivity::class.java)
     intent.putExtra(NotifDetailActivity.NOTIF_ID_DETAIL, notifId)
-    startActivity(intent)
+    startActivityForResult(intent, 0)
   }
 
   private fun showAddNotifUi() {

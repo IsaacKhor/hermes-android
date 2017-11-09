@@ -9,6 +9,8 @@
     <string name="menu_add_confirm">Add</string>
     <string name="edit_target_topic">Edit Target/Topic</string>
 
+    <string name="label_empty_tt_list">None; click here to add one</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

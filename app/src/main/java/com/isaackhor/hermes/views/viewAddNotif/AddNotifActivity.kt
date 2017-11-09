@@ -1,13 +1,19 @@
 package com.isaackhor.hermes.views.viewAddNotif
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.isaackhor.hermes.R
-import com.isaackhor.hermes.source.NotifsRepo
-import com.isaackhor.hermes.utils.Utils
+import com.isaackhor.hermes.model.LimboNotif
+import com.isaackhor.hermes.utils.*
 import kotlinx.android.synthetic.main.activity_add_notif.*
 
 class AddNotifActivity : AppCompatActivity() {
@@ -17,7 +23,7 @@ class AddNotifActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_add_notif)
 
-    setSupportActionBar(findViewById(R.id.add_toolbar))
+    setSupportActionBar(add_toolbar)
     supportActionBar?.apply {
       setDisplayHomeAsUpEnabled(true)
       setDisplayShowHomeEnabled(true)
@@ -25,10 +31,38 @@ class AddNotifActivity : AppCompatActivity() {
 
     // ViewModel
     viewModel = ViewModelProviders.of(this).get(AddNotifViewModel::class.java)
-    viewModel.setRepo(NotifsRepo.TESTING)
 
-    Utils.onEditTextChanged(add_editTitle) { s -> viewModel.title.value = s }
-    Utils.onEditTextChanged(add_editContent) { s -> viewModel.content.value = s }
+    onEditTextChanged(add_editTitle) { s -> viewModel.title.value = s }
+    onEditTextChanged(add_editContent) { s -> viewModel.content.value = s }
+
+    // Show a 'click here to add more' msg when targets/topics is blank
+    obsListToStr(viewModel.targets, R.string.label_empty_tt_list,
+        {it.name}, { add_editTargets.text = it })
+    obsListToStr(viewModel.topics, R.string.label_empty_tt_list,
+        {it.name}, { add_editTopics.text = it })
+
+    viewModel.onNewNotifEvent.observe(this, Observer { ln -> returnRes(ln!!) })
+
+    // Show detail selection activity on click
+    add_editTargets.setOnClickListener {  }
+
+    // Snackbar
+    setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_INDEFINITE)
+  }
+
+  private fun <T> obsListToStr(list: LiveData<List<T>>, emptyStrId: Int,
+                               f: (T) -> String, g: (String?) -> Unit ) {
+    list.observe(this, Observer { l ->
+      val s = l?.let {
+        if(it.isEmpty()) getString(emptyStrId)
+        else it.map(f).reduceRight { a, b -> a + '\n' + b }
+      }
+      g(s)
+    })
+  }
+
+  private fun returnRes(notif: LimboNotif) {
+    val ret = Intent()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,8 +73,7 @@ class AddNotifActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
       R.id.menu_add_confirm -> {
-//        viewModel.addNewNotif()
-        finish()
+        viewModel.addNewNotif()
         true
       }
       android.R.id.home -> {
