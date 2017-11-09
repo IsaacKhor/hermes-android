@@ -3,12 +3,15 @@ package com.isaackhor.hermes.utils
 import android.app.Activity
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.bluetooth.le.BluetoothLeScanner
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProviders
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import com.isaackhor.hermes.VMFactory
 
 fun onEditTextChanged(view: EditText, f: (String) -> Unit) {
   view.addTextChangedListener(object : TextWatcher {
@@ -40,3 +43,6 @@ fun Activity.setupStrSnackbar(lifecycleOwner: LifecycleOwner,
 fun View.showSnackbar(text: String, timeLength: Int) {
   Snackbar.make(this, text, timeLength).show()
 }
+
+fun <T:ViewModel> AppCompatActivity.getViewModel(cls: Class<T>) =
+    ViewModelProviders.of(this, VMFactory.getInstance(application)).get(cls)

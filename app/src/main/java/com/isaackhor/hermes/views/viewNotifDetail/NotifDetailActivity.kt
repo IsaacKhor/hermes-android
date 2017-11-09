@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.source.NotifsRepo
+import com.isaackhor.hermes.utils.getViewModel
 import kotlinx.android.synthetic.main.activity_notif_detail.*
 
 class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
@@ -28,8 +29,7 @@ class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
 
     val id = intent.getIntExtra(NOTIF_ID_DETAIL, 0)
 
-    viewModel = ViewModelProviders.of(this).get(NotifDetailViewModel::class.java)
-    viewModel.setRepo(NotifsRepo.TESTING)
+    viewModel = getViewModel(NotifDetailViewModel::class.java)
     viewModel.setId(id)
     viewModel.notif.observe(this, Observer { new ->
       if (new != null) {

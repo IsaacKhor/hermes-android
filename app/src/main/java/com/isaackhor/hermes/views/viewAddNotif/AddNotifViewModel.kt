@@ -19,8 +19,8 @@ class AddNotifViewModel : ViewModel() {
   fun addNewNotif() {
     onNewNotifEvent.value =
         LimboNotif(
-            title.value ?: "Empty title",
-            content.value ?: "Empty content",
+            title.value ?: "No title",
+            content.value ?: "No content",
             targets.value ?: listOf(),
             topics.value ?: listOf())
   }

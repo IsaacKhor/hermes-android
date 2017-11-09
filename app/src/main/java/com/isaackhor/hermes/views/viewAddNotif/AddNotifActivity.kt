@@ -30,31 +30,36 @@ class AddNotifActivity : AppCompatActivity() {
     }
 
     // ViewModel
-    viewModel = ViewModelProviders.of(this).get(AddNotifViewModel::class.java)
+    viewModel = getViewModel(AddNotifViewModel::class.java)
+    with(viewModel) {
+      onEditTextChanged(add_editTitle) { s -> title.value = s }
+      onEditTextChanged(add_editContent) { s -> content.value = s }
 
-    onEditTextChanged(add_editTitle) { s -> viewModel.title.value = s }
-    onEditTextChanged(add_editContent) { s -> viewModel.content.value = s }
+      // Show a 'click here to add more' msg when targets/topics is blank
+      obsListToStr(targets, R.string.label_empty_tt_list,
+          { it.name }, { add_editTargets.text = it })
+      obsListToStr(topics, R.string.label_empty_tt_list,
+          { it.name }, { add_editTopics.text = it })
 
-    // Show a 'click here to add more' msg when targets/topics is blank
-    obsListToStr(viewModel.targets, R.string.label_empty_tt_list,
-        {it.name}, { add_editTargets.text = it })
-    obsListToStr(viewModel.topics, R.string.label_empty_tt_list,
-        {it.name}, { add_editTopics.text = it })
+      // Force event to fire on load
+      targets.value = listOf()
+      topics.value = listOf()
+    }
 
     viewModel.onNewNotifEvent.observe(this, Observer { ln -> returnRes(ln!!) })
 
     // Show detail selection activity on click
-    add_editTargets.setOnClickListener {  }
+    add_editTargets.setOnClickListener { }
 
     // Snackbar
     setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_INDEFINITE)
   }
 
   private fun <T> obsListToStr(list: LiveData<List<T>>, emptyStrId: Int,
-                               f: (T) -> String, g: (String?) -> Unit ) {
+                               f: (T) -> String, g: (String?) -> Unit) {
     list.observe(this, Observer { l ->
       val s = l?.let {
-        if(it.isEmpty()) getString(emptyStrId)
+        if (it.isEmpty()) getString(emptyStrId)
         else it.map(f).reduceRight { a, b -> a + '\n' + b }
       }
       g(s)

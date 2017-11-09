@@ -16,6 +16,7 @@ import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.source.NotifsRepo
+import com.isaackhor.hermes.utils.getViewModel
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
 import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.collections.immutable.immutableListOf
@@ -28,8 +29,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_notifications)
 
-    viewModel = ViewModelProviders.of(this).get(NotifsViewModel::class.java)
-    viewModel.setRepo(NotifsRepo.TESTING)
+    viewModel = getViewModel(NotifsViewModel::class.java)
     viewModel.loadNotifs(true, true)
 
     // User clicked on a notification in the list, switch to details activity
