@@ -1,3 +1,6 @@
 package com.isaackhor.hermes.model
 
-interface NotifGroup
+interface NotifGroup {
+  val id: Int
+  val name: String
+}

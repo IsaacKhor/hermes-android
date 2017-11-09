@@ -14,6 +14,7 @@ import android.view.View
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.LimboNotif
 import com.isaackhor.hermes.utils.*
+import com.isaackhor.hermes.views.viewSelectTargetTopic.SelectTTActivity
 import kotlinx.android.synthetic.main.activity_add_notif.*
 
 class AddNotifActivity : AppCompatActivity() {
@@ -49,10 +50,21 @@ class AddNotifActivity : AppCompatActivity() {
     viewModel.onNewNotifEvent.observe(this, Observer { ln -> returnRes(ln!!) })
 
     // Show detail selection activity on click
-    add_editTargets.setOnClickListener { }
+    add_editTargets.setOnClickListener { addTT(SelectTTActivity.MODE_TARGET) }
+    add_editTopics.setOnClickListener { addTT(SelectTTActivity.MODE_TOPIC) }
 
     // Snackbar
-    setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_INDEFINITE)
+    setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_LONG)
+  }
+
+  private fun addTT(mode: String) {
+    val intent = Intent(this, SelectTTActivity::class.java)
+    intent.putExtra(SelectTTActivity.MODE_ARGKEY, mode)
+    startActivityForResult(intent, 0)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
   }
 
   private fun <T> obsListToStr(list: LiveData<List<T>>, emptyStrId: Int,
