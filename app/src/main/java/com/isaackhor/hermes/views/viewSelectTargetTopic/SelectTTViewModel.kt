@@ -11,7 +11,7 @@ import java.lang.IllegalArgumentException
 class SelectTTViewModel(
     val repo: NotifsRepo
 ) : ViewModel() {
-  val groups = MutableLiveData<List<NotifGroup>>()
+  val groups = MutableLiveData<List<NotifGroup>>().apply { value = emptyList() }
   lateinit var mode: String
 
   fun setNewMode(new: String) {

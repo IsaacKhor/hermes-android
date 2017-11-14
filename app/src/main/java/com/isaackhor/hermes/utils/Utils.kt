@@ -1,15 +1,14 @@
 package com.isaackhor.hermes.utils
 
 import android.app.Activity
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
+import android.support.annotation.LayoutRes
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import com.isaackhor.hermes.VMFactory
 
@@ -46,3 +45,11 @@ fun View.showSnackbar(text: String, timeLength: Int) {
 
 fun <T:ViewModel> AppCompatActivity.getViewModel(cls: Class<T>) =
     ViewModelProviders.of(this, VMFactory.getInstance(application)).get(cls)
+
+fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): android.view.View {
+  val inflater = android.view.LayoutInflater.from(context)
+  return inflater.inflate(layoutId, this, attachToRoot)
+}
+
+fun <T> LiveData<T>.observe(owner: LifecycleOwner, f: (T?) -> Unit)
+    = observe(owner, Observer { f(it) })
