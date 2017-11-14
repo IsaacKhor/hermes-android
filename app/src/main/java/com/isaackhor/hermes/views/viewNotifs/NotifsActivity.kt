@@ -2,20 +2,16 @@ package com.isaackhor.hermes.views.viewNotifs
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
-import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.utils.getViewModel
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
 import kotlinx.android.synthetic.main.activity_notifications.*
@@ -60,7 +56,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.notifs_menu, menu)
+    menuInflater.inflate(R.menu.menu_notifs, menu)
     return true
   }
 

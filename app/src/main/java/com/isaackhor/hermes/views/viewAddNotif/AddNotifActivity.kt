@@ -80,7 +80,7 @@ class AddNotifActivity : AppCompatActivity() {
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.add_menu, menu)
+    menuInflater.inflate(R.menu.menu_add, menu)
     return true
   }
 
