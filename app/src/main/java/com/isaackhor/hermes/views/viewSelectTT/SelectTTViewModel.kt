@@ -1,10 +1,8 @@
-package com.isaackhor.hermes.views.viewSelectTargetTopic
+package com.isaackhor.hermes.views.viewSelectTT
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.model.NotifGroup
-import com.isaackhor.hermes.model.NotifTarget
-import com.isaackhor.hermes.model.NotifTopic
 import com.isaackhor.hermes.source.NotifsRepo
 import java.lang.IllegalArgumentException
 

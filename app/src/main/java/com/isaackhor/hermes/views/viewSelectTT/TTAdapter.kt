@@ -1,11 +1,10 @@
-package com.isaackhor.hermes.views.viewSelectTargetTopic
+package com.isaackhor.hermes.views.viewSelectTT
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.NotifGroup
-import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.utils.inflate
 import kotlinx.android.synthetic.main.view_group.view.*
 

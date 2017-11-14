@@ -1,20 +1,17 @@
 package com.isaackhor.hermes.views.viewAddNotif
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.LimboNotif
 import com.isaackhor.hermes.utils.*
-import com.isaackhor.hermes.views.viewSelectTargetTopic.SelectTTActivity
+import com.isaackhor.hermes.views.viewSelectTT.SelectTTActivity
 import kotlinx.android.synthetic.main.activity_add_notif.*
 
 class AddNotifActivity : AppCompatActivity() {

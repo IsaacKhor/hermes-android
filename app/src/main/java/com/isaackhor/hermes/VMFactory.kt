@@ -6,9 +6,8 @@ import android.arch.lifecycle.ViewModelProvider
 import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.views.viewAddNotif.AddNotifViewModel
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailViewModel
-import com.isaackhor.hermes.views.viewNotifs.NotifsActivity
 import com.isaackhor.hermes.views.viewNotifs.NotifsViewModel
-import com.isaackhor.hermes.views.viewSelectTargetTopic.SelectTTViewModel
+import com.isaackhor.hermes.views.viewSelectTT.SelectTTViewModel
 
 class VMFactory private constructor(
     private val repo: NotifsRepo

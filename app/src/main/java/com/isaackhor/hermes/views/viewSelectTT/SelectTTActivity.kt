@@ -1,10 +1,9 @@
-package com.isaackhor.hermes.views.viewSelectTargetTopic
+package com.isaackhor.hermes.views.viewSelectTT
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.isaackhor.hermes.R
-import com.isaackhor.hermes.source.NotifsRepo
 import com.isaackhor.hermes.utils.getViewModel
 import com.isaackhor.hermes.utils.observe
 import kotlinx.android.synthetic.main.activity_select_topic_target.*
