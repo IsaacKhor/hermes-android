@@ -26,5 +26,9 @@ class TTAdapter(
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
       Holder(parent.inflate(R.layout.view_group))
 
-  class Holder(view: View) : RecyclerView.ViewHolder(view)
+  class Holder(
+      view: View
+  ) : RecyclerView.ViewHolder(view) {
+    
+  }
 }

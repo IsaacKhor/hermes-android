@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.utils.getViewModel
 import com.isaackhor.hermes.utils.observe
-import kotlinx.android.synthetic.main.activity_select_topic_target.*
+import kotlinx.android.synthetic.main.activity_select_tt.*
 
 class SelectTTActivity : AppCompatActivity() {
   private lateinit var adapter: TTAdapter
@@ -14,7 +14,7 @@ class SelectTTActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_select_topic_target)
+    setContentView(R.layout.activity_select_tt)
     setSupportActionBar(select_tt_toolbar)
 
     vm = getViewModel(SelectTTViewModel::class.java)
