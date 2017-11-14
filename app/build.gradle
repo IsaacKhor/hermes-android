@@ -35,12 +35,12 @@ dependencies {
 
     // Lifecycles
     implementation "android.arch.lifecycle:runtime:1.0.3"
-    implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-rc1"
+    implementation "android.arch.lifecycle:extensions:1.0.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
 
     // LiveData + ViewModel
-    implementation "android.arch.lifecycle:extensions:1.0.0-rc1"
-    implementation "android.arch.lifecycle:reactivestreams:1.0.0-rc1"
+    implementation "android.arch.lifecycle:extensions:1.0.0"
+    implementation "android.arch.lifecycle:reactivestreams:1.0.0"
 
     // Tests
     testImplementation 'junit:junit:4.12'
@@ -54,9 +54,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.11"
 
     // Room
-    implementation "android.arch.persistence.room:runtime:1.0.0-rc1"
-    implementation "android.arch.persistence.room:rxjava2:1.0.0-rc1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-rc1"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     // Rx
     implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
