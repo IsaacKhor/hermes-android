@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.*
 import android.support.annotation.LayoutRes
 import android.support.design.widget.Snackbar
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -53,3 +54,8 @@ fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): 
 
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, f: (T?) -> Unit)
     = observe(owner, Observer { f(it) })
+
+fun ActionBar.addBackBtn() {
+  setDisplayHomeAsUpEnabled(true)
+  setDisplayShowHomeEnabled(true)
+}

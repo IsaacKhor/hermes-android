@@ -84,17 +84,15 @@ class AddNotifActivity : AppCompatActivity() {
     return true
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    return when (item.itemId) {
-      R.id.menu_add_confirm -> {
-        viewModel.addNewNotif()
-        true
-      }
-      android.R.id.home -> {
-        finish()
-        true
-      }
-      else -> super.onOptionsItemSelected(item)
+  override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+    R.id.menu_add_confirm -> {
+      viewModel.addNewNotif()
+      true
     }
+    android.R.id.home -> {
+      finish()
+      true
+    }
+    else -> super.onOptionsItemSelected(item)
   }
 }
