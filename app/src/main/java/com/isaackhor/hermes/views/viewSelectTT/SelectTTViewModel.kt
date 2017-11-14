@@ -1,6 +1,7 @@
 package com.isaackhor.hermes.views.viewSelectTT
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.model.NotifGroup
 import com.isaackhor.hermes.source.NotifsRepo
@@ -10,6 +11,7 @@ class SelectTTViewModel(
     val repo: NotifsRepo
 ) : ViewModel() {
   val groups = MutableLiveData<List<NotifGroup>>().apply { value = emptyList() }
+  val groupsName = Transformations.map(groups, { it.map { it.name }})
   lateinit var mode: String
 
   fun setNewMode(new: String) {
