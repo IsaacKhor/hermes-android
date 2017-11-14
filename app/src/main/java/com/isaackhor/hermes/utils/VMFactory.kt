@@ -1,4 +1,4 @@
-package com.isaackhor.hermes
+package com.isaackhor.hermes.utils
 
 import android.app.Application
 import android.arch.lifecycle.ViewModel
