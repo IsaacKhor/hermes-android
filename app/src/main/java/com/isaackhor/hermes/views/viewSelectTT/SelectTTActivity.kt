@@ -7,13 +7,14 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.isaackhor.hermes.R
+import com.isaackhor.hermes.model.NotifGroup
 import com.isaackhor.hermes.utils.getViewModel
 import com.isaackhor.hermes.utils.observe
 import com.isaackhor.hermes.utils.addBackBtn
 import kotlinx.android.synthetic.main.activity_select_tt.*
 
 class SelectTTActivity : AppCompatActivity() {
-  private lateinit var listAdapter: ArrayAdapter<String>
+  private lateinit var listAdapter: TTAdapter
   private lateinit var vm: SelectTTViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,16 +29,15 @@ class SelectTTActivity : AppCompatActivity() {
     val mode = intent.getStringExtra(MODE_ARGKEY)
     vm.setNewMode(mode)
 
-    listAdapter = ArrayAdapter(this,
-        android.R.layout.simple_list_item_multiple_choice,
-        vm.groupsName.value?.toMutableList() ?: mutableListOf())
+    listAdapter = TTAdapter(this,
+        vm.groups.value?.toMutableList() ?: mutableListOf())
 
     stt_listTargets.apply {
       adapter = listAdapter
       choiceMode = ListView.CHOICE_MODE_MULTIPLE
     }
 
-    vm.groupsName.observe(this)
+    vm.groups.observe(this)
         { it?.let { listAdapter.addAll(*it.toTypedArray()) }}
   }
 

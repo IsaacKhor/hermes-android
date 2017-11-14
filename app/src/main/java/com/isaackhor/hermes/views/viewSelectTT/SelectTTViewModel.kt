@@ -11,7 +11,6 @@ class SelectTTViewModel(
     val repo: NotifsRepo
 ) : ViewModel() {
   val groups = MutableLiveData<List<NotifGroup>>().apply { value = emptyList() }
-  val groupsName = Transformations.map(groups, { it.map { it.name }})
   lateinit var mode: String
 
   fun setNewMode(new: String) {
