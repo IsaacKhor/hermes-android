@@ -8,7 +8,7 @@ import com.isaackhor.hermes.source.NotifsRepo
 import java.lang.IllegalArgumentException
 
 class SelectTTViewModel(
-    val repo: NotifsRepo
+    private val repo: NotifsRepo
 ) : ViewModel() {
   val groups = MutableLiveData<List<NotifGroup>>().apply { value = emptyList() }
   lateinit var mode: String
