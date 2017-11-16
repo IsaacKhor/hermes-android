@@ -1,5 +1,6 @@
 package com.isaackhor.hermes.views.viewAddNotif
 
+import android.app.Activity
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.content.Intent
@@ -47,21 +48,29 @@ class AddNotifActivity : AppCompatActivity() {
     viewModel.onNewNotifEvent.observe(this, Observer { ln -> returnRes(ln!!) })
 
     // Show detail selection activity on click
-    add_editTargets.setOnClickListener { addTT(SelectTTActivity.MODE_TARGET) }
-    add_editTopics.setOnClickListener { addTT(SelectTTActivity.MODE_TOPIC) }
+    add_editTargets.setOnClickListener { addTT(REQ_TARGET) }
+    add_editTopics.setOnClickListener { addTT(REQ_TOPIC) }
 
     // Snackbar
     setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_LONG)
   }
 
-  private fun addTT(mode: String) {
+  private fun addTT(mode: Int) {
     val intent = Intent(this, SelectTTActivity::class.java)
-    intent.putExtra(SelectTTActivity.MODE_ARGKEY, mode)
-    startActivityForResult(intent, 0)
+    val pm = if(mode == REQ_TOPIC) SelectTTActivity.MODE_TOPIC else SelectTTActivity.MODE_TARGET
+    intent.putExtra(SelectTTActivity.MODE_ARGKEY, pm)
+    startActivityForResult(intent, mode)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
+    if (resultCode == Activity.RESULT_CANCELED || data == null) return
+    val res = data.getIntArrayExtra(SelectTTActivity.RESULT_IDS).toList()
+
+    when(requestCode) {
+      REQ_TARGET -> viewModel.setNewTargetsFromId(res)
+      REQ_TOPIC -> viewModel.setNewTopicsFromId(res)
+      else -> throw IllegalArgumentException("Illegal requestCode: $requestCode")
+    }
   }
 
   private fun <T> obsListToStr(list: LiveData<List<T>>, emptyStrId: Int,
@@ -94,5 +103,10 @@ class AddNotifActivity : AppCompatActivity() {
       true
     }
     else -> super.onOptionsItemSelected(item)
+  }
+
+  companion object {
+    val REQ_TARGET = 1
+    val REQ_TOPIC = 2
   }
 }
