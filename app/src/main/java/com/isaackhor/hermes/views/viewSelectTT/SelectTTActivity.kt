@@ -68,7 +68,7 @@ class SelectTTActivity : AppCompatActivity() {
       setResult(Activity.RESULT_CANCELED)
     } else {
       val intent = Intent()
-      intent.putIntegerArrayListExtra(RESULT_IDS, ArrayList(selected))
+      intent.putExtra(RESULT_IDS, selected.toIntArray())
       setResult(Activity.RESULT_OK, intent)
     }
 
