@@ -15,7 +15,7 @@ class VMFactory private constructor(
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
     return with(modelClass) {
       when {
-        isAssignableFrom(AddNotifViewModel::class.java) -> AddNotifViewModel()
+        isAssignableFrom(AddNotifViewModel::class.java) -> AddNotifViewModel(repo)
         isAssignableFrom(NotifDetailViewModel::class.java) -> NotifDetailViewModel(repo)
         isAssignableFrom(NotifsViewModel::class.java) -> NotifsViewModel(repo)
         isAssignableFrom(SelectTTViewModel::class.java) -> SelectTTViewModel(repo)

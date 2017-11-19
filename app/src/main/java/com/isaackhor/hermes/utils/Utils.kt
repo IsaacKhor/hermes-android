@@ -21,9 +21,7 @@ fun onEditTextChanged(view: EditText, f: (String) -> Unit) {
   })
 }
 
-fun Activity.getRootView(): View {
-  return findViewById(android.R.id.content)
-}
+fun Activity.getRootView(): View = findViewById(android.R.id.content)
 
 fun Activity.setupSnackbar(lifecycleOwner: LifecycleOwner,
                            snackbarLiveEvent: SingleLiveEvent<Int>, timeLength: Int) {
