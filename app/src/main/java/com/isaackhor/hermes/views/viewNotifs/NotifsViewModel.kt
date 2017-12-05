@@ -30,7 +30,7 @@ class NotifsViewModel(
     filterMode.value = FilterMode.TARGET
     repo.getAllNotifs()
       .subscribeOn(Schedulers.io())
-      .subscribeBy(onSuccess = {notifs.postValue(it)})
+      .subscribeBy(onSuccess = { notifs.postValue(it) })
     dataLoading.value = false
   }
 
@@ -43,12 +43,12 @@ class NotifsViewModel(
       .getAllNotifs()
       .subscribeOn(Schedulers.io())
       .subscribe { res ->
-      Log.i("NotifsViewModel", "Loading data success")
-      notifs.postValue(res)
-      // TODO implement filtering
-      filteredNotifs.postValue(res)
-      dataLoading.postValue(false)
-    }
+        Log.i("NotifsViewModel", "Loading data success")
+        notifs.postValue(res)
+        // TODO implement filtering
+        filteredNotifs.postValue(res)
+        dataLoading.postValue(false)
+      }
   }
 
   fun modifyFilter() {}

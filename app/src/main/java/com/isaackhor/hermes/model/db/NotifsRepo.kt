@@ -1,11 +1,10 @@
 package com.isaackhor.hermes.model.db
 
+import android.util.Log
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
-import io.reactivex.Observable
+import com.isaackhor.hermes.utils.ioThread
 import io.reactivex.Single
-import io.reactivex.rxkotlin.toSingle
-import io.reactivex.schedulers.Schedulers
 
 class NotifsRepo(
   private val db: NotifsDb,
@@ -23,14 +22,18 @@ class NotifsRepo(
   }
 
   fun addNotif(title: String, content: String, tags: List<NotifTag>): Single<Notif> {
-    val tagJoins = tags.map { NotifTagJoin(0, notifsId, it.id) }
-    db.getNotifTagJoinDao().insert(tagJoins)
-
+    val tagJoins = tags.map { NotifTagJoin(notifsId, it.id) }
     val notif = Notif(notifsId, title, content)
-    db.getNotifDao().insert(listOf(notif))
-    notifsId += 1
 
-    return Single.fromCallable { notif }.subscribeOn(Schedulers.io())
+    ioThread {
+      db.getNotifDao().insert(listOf(notif))
+      db.getNotifTagJoinDao().insert(tagJoins)
+    }
+
+    Log.i("NotifsRepo", "Inserting notif: $title")
+
+    notifsId += 1
+    return Single.just(notif)
   }
 
   fun getAllTags(): Single<List<NotifTag>> {
@@ -45,9 +48,12 @@ class NotifsRepo(
     return db.getTagDao().getTags(ids)
   }
 
-  fun addTag(name: String, tags: List<NotifTag>): Single<NotifTag> {
+  fun addTag(name: String): Single<NotifTag> {
     val tag = NotifTag(tagsId, name)
-    db.getTagDao().insert(listOf(tag))
+    ioThread { db.getTagDao().insert(listOf(tag)) }
+
+    Log.i("NotifsRepo", "Inserting tag: $name")
+
     return Single.just(tag)
   }
 
@@ -57,5 +63,9 @@ class NotifsRepo(
 
   fun fetchRemote(): Single<Unit> {
     return remoteSource.fetch()
+  }
+
+  fun nukeEverything() {
+
   }
 }

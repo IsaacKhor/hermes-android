@@ -37,8 +37,10 @@ class NotifDetailActivity : AppCompatActivity(), LifecycleOwner {
     })
     viewModel.tags.observe(this, Observer {
       it?.let {
-        dt_editTags.text =
-          it.map { it.name }.reduceRight { a, b -> a + '\n' + b }
+        if (it.isEmpty())
+          dt_editTags.setText(R.string.no_tags)
+        else
+          dt_editTags.text = it.map { it.name }.reduceRight { a, b -> a + '\n' + b }
       }
     })
   }

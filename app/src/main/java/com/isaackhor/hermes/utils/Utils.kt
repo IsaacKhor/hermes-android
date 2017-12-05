@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import com.isaackhor.hermes.R
+import java.util.concurrent.Executors
 
 fun onEditTextChanged(view: EditText, f: (String) -> Unit) {
   view.addTextChangedListener(object : TextWatcher {
@@ -77,4 +78,10 @@ fun <T> LiveData<T>.observe(owner: LifecycleOwner, f: (T?) -> Unit)
 fun ActionBar.addBackBtn() {
   setDisplayHomeAsUpEnabled(true)
   setDisplayShowHomeEnabled(true)
+}
+
+private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
+
+fun ioThread(f: () -> Unit) {
+  IO_EXECUTOR.execute(f)
 }

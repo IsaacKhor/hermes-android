@@ -10,7 +10,7 @@ import com.isaackhor.hermes.utils.SingletonHolder
 
 @Database(
   entities = [NotifTagJoin::class, Notif::class, NotifTag::class],
-  version = 1)
+  version = 2)
 abstract class NotifsDb : RoomDatabase() {
 
   abstract fun getNotifDao(): NotifDao
@@ -19,7 +19,9 @@ abstract class NotifsDb : RoomDatabase() {
 
   companion object : SingletonHolder<NotifsDb, Context>({
     Room.databaseBuilder(
-      it.applicationContext, NotifsDb::class.java, Companion.DB_NAME).build()
+      it.applicationContext, NotifsDb::class.java, Companion.DB_NAME)
+      .fallbackToDestructiveMigration()
+      .build()
   }) {
     private val DB_NAME = "notifs.db"
   }

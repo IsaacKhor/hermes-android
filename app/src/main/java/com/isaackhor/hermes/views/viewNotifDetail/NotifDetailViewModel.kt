@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
 import com.isaackhor.hermes.model.db.NotifsRepo
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 
@@ -19,8 +20,10 @@ class NotifDetailViewModel(
     notifId = id
     repo.getNotif(id)
       .subscribeOn(Schedulers.io())
-      .doOnSuccess { notif.postValue(it) }
-      .flatMap { repo.getTagsForNotif(it) }
-      .doOnSuccess { tags.postValue(it) }
+      .subscribeBy {
+        notif.postValue(it)
+        repo.getTagsForNotif(it)
+          .subscribeBy { tags.postValue(it) }
+      }
   }
 }

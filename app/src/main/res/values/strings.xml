@@ -16,4 +16,5 @@
     <string name="sending_notif_msg">Sending notification to server…</string>
     <string name="send_notif_fail">Failed to send notification. Try again later.</string>
     <string name="no_msg">No message</string>
+    <string name="no_tags">No tags</string>
 </resources>
