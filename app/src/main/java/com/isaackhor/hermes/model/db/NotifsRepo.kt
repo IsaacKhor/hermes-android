@@ -4,20 +4,21 @@ import android.util.Log
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
 import com.isaackhor.hermes.utils.ioThread
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 class NotifsRepo(
   private val db: NotifsDb,
-  private val remoteSource: RemoteNotifs
+  private val remoteApi: NotifsApi
 ) {
   private var notifsId = 100
   private var tagsId = 100
 
-  fun getAllNotifs(): Single<List<Notif>> {
+  fun getAllNotifs(): Flowable<List<Notif>> {
     return db.getNotifDao().getAllNotifs()
   }
 
-  fun getNotif(id: Int): Single<Notif> {
+  fun getNotif(id: Int): Flowable<Notif> {
     return db.getNotifDao().getNotif(id)
   }
 
@@ -36,15 +37,15 @@ class NotifsRepo(
     return Single.just(notif)
   }
 
-  fun getAllTags(): Single<List<NotifTag>> {
+  fun getAllTags(): Flowable<List<NotifTag>> {
     return db.getTagDao().getAllTags()
   }
 
-  fun getTag(id: Int): Single<NotifTag> {
+  fun getTag(id: Int): Flowable<NotifTag> {
     return db.getTagDao().getTag(id)
   }
 
-  fun getTags(ids: List<Int>): Single<List<NotifTag>> {
+  fun getTags(ids: List<Int>): Flowable<List<NotifTag>> {
     return db.getTagDao().getTags(ids)
   }
 
@@ -57,12 +58,12 @@ class NotifsRepo(
     return Single.just(tag)
   }
 
-  fun getTagsForNotif(notif: Notif): Single<List<NotifTag>> {
+  fun getTagsForNotif(notif: Notif): Flowable<List<NotifTag>> {
     return db.getNotifTagJoinDao().getTagsForNotif(notif.id)
   }
 
   fun fetchRemote(): Single<Unit> {
-    return remoteSource.fetch()
+    return remoteApi.fetch()
   }
 
   fun nukeEverything() {

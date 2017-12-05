@@ -3,7 +3,7 @@ package com.isaackhor.hermes.model.db
 import android.arch.persistence.room.*
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 @Dao
 interface NotifTagJoinDao {
@@ -18,12 +18,12 @@ interface NotifTagJoinDao {
       tags.id=notif_tag_join.tagId WHERE
       notif_tag_join.notifId=:notifId
   """)
-  fun getTagsForNotif(notifId: Int): Single<List<NotifTag>>
+  fun getTagsForNotif(notifId: Int): Flowable<List<NotifTag>>
 
   @Query("""
     SELECT * FROM notifications INNER JOIN notif_tag_join ON
       notifications.id=notif_tag_join.notifId WHERE
       notif_tag_join.tagId=:tagId
   """)
-  fun getNotifsForTag(tagId: Int): Single<List<Notif>>
+  fun getNotifsForTag(tagId: Int): Flowable<List<Notif>>
 }

@@ -3,9 +3,9 @@ package com.isaackhor.hermes.utils
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.isaackhor.hermes.model.db.NotifsApi
 import com.isaackhor.hermes.model.db.NotifsDb
 import com.isaackhor.hermes.model.db.NotifsRepo
-import com.isaackhor.hermes.model.db.RemoteNotifs
 import com.isaackhor.hermes.views.viewAddNotif.AddNotifViewModel
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailViewModel
 import com.isaackhor.hermes.views.viewNotifs.NotifsViewModel
@@ -30,6 +30,6 @@ class VMFactory private constructor(
     VMFactory(
       NotifsRepo(
         NotifsDb.getInstance(it.applicationContext),
-        RemoteNotifs()))
+        NotifsApi()))
   })
 }

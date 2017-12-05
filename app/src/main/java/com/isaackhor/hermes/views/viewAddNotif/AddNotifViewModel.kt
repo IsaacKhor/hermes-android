@@ -44,7 +44,7 @@ class AddNotifViewModel(
     repo.getTags(ids)
       .subscribeOn(Schedulers.io())
       .subscribeBy(
-        onSuccess = { tags.postValue(it.toImmutableList()) },
+        onNext = { tags.postValue(it.toImmutableList()) },
         onError = { snackbarMsg.postValue(R.string.retrieve_topics_fail) })
       .addTo(disposable)
   }

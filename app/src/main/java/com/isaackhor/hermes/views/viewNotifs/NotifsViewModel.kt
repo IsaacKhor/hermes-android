@@ -1,59 +1,54 @@
 package com.isaackhor.hermes.views.viewNotifs
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
+import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
-import com.isaackhor.hermes.model.NotifTag
 import com.isaackhor.hermes.model.db.NotifsRepo
 import com.isaackhor.hermes.utils.SingleLiveEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 class NotifsViewModel(
   private val repo: NotifsRepo
 ) : ViewModel() {
-  var notifs = MutableLiveData<List<Notif>>()
 
-  val filteredNotifs = MutableLiveData<List<Notif>>()
-  val filterMode = MutableLiveData<FilterMode>()
-  val filterTargets = MutableLiveData<List<Target>>()
-  val filterTopics = MutableLiveData<List<NotifTag>>()
+  var notifs: LiveData<List<Notif>> =
+    LiveDataReactiveStreams.fromPublisher(
+      repo.getAllNotifs()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+    )
 
   val openNotifDetailsEvent = SingleLiveEvent<Int>() // Int is notifId
   val newNotifEvent = SingleLiveEvent<Void>()
 
   val dataLoading = MutableLiveData<Boolean>()
-  val snackbarMsg = MutableLiveData<String>()
+  val snackbar = MutableLiveData<Int>()
 
   init {
-    filterMode.value = FilterMode.TARGET
-    repo.getAllNotifs()
-      .subscribeOn(Schedulers.io())
-      .subscribeBy(onSuccess = { notifs.postValue(it) })
     dataLoading.value = false
   }
 
   fun loadNotifs(showLoadingUi: Boolean, forceFetch: Boolean) {
     if (showLoadingUi) dataLoading.value = true
-    //TODO setup snackbar message on error
-//    if (forceFetch) repo?.fetchRemote()?.subscribe() { _ -> snackbarMsg.value = "Error" }
 
-    repo
-      .getAllNotifs()
-      .subscribeOn(Schedulers.io())
-      .subscribe { res ->
-        Log.i("NotifsViewModel", "Loading data success")
-        notifs.postValue(res)
-        // TODO implement filtering
-        filteredNotifs.postValue(res)
+    repo.fetchRemote().subscribeBy(
+      onSuccess = { dataLoading.postValue(false) },
+      onError = {
+        snackbar.postValue(R.string.retrieve_notifs_fail)
         dataLoading.postValue(false)
       }
+    )
   }
 
   fun modifyFilter() {}
 
   fun addNewNotif() = newNotifEvent.call()
+
   fun openNotifDetails(notifId: Int) {
     openNotifDetailsEvent.value = notifId
   }
