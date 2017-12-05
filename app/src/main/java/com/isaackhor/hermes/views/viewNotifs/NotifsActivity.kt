@@ -16,8 +16,6 @@ import com.isaackhor.hermes.utils.setupSnackbar
 import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
 import kotlinx.android.synthetic.main.activity_notifications.*
-import kotlinx.collections.immutable.immutableListOf
-import kotlinx.collections.immutable.toImmutableList
 
 class NotifsActivity : AppCompatActivity(), LifecycleOwner {
   private lateinit var vm: NotifsViewModel
@@ -30,7 +28,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     vm.loadNotifs(true, false)
 
     // User clicked on a notification in the list, switch to details activity
-    vm.openNotifDetailsEvent.observe(this) { showNotifDetails(it) }
+    vm.openNotifDetailsEvent.observe(this, ::showNotifDetails)
     vm.newNotifEvent.observe(this) { showAddNotifUi() }
 
     // Recycler view
@@ -38,17 +36,15 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
       setHasFixedSize(true)
       layoutManager = LinearLayoutManager(this@NotifsActivity)
 
-      val adap = NotifsAdapter(immutableListOf(), vm)
-      vm.notifs.observe(this@NotifsActivity) {
-        it?.let { adap.updateNotifsList(it.toImmutableList()) }
-      }
+      val adap = NotifsAdapter(vm)
+      vm.notifs.observe(this@NotifsActivity, adap::setList)
       adapter = adap
     }
 
     // Swipe refresh view
-    nt_swipeRefresh.setOnRefreshListener { vm.loadNotifs(true, true) }
+    nt_swipeRefresh.setOnRefreshListener() { vm.loadNotifs(true, true) }
     vm.dataLoading.observe(this) {
-      it?.let { if (it) nt_swipeRefresh.isRefreshing = it }
+      it?.let { nt_swipeRefresh.isRefreshing = it }
     }
 
     // Snackbar

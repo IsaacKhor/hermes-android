@@ -1,27 +1,25 @@
 package com.isaackhor.hermes.views.viewNotifs
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.LiveDataReactiveStreams
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.paging.PagedList
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.db.NotifsRepo
 import com.isaackhor.hermes.utils.SingleLiveEvent
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 class NotifsViewModel(
   private val repo: NotifsRepo
 ) : ViewModel() {
 
-  var notifs: LiveData<List<Notif>> =
-    LiveDataReactiveStreams.fromPublisher(
-      repo.getAllNotifs()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-    )
+  var notifs: LiveData<PagedList<Notif>> =
+    repo.getAllNotifsTiled().create(0,
+      PagedList.Config.Builder()
+        .setPageSize(50)
+        .setPrefetchDistance(50)
+        .build())
 
   val openNotifDetailsEvent = SingleLiveEvent<Int>() // Int is notifId
   val newNotifEvent = SingleLiveEvent<Void>()

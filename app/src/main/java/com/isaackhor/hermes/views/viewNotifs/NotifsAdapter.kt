@@ -1,5 +1,7 @@
 package com.isaackhor.hermes.views.viewNotifs
 
+import android.arch.paging.PagedListAdapter
+import android.support.v7.recyclerview.extensions.DiffCallback
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,28 +9,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.isaackhor.hermes.R
 import com.isaackhor.hermes.model.Notif
-import kotlinx.collections.immutable.ImmutableList
 
 class NotifsAdapter(
-  private var notifs: ImmutableList<Notif>,
   private var viewModel: NotifsViewModel
-) : RecyclerView.Adapter<NotifsAdapter.NotifViewHolder>() {
-  override fun onBindViewHolder(holder: NotifViewHolder, position: Int) =
-    holder.bind(notifs[position].title)
+) : PagedListAdapter<Notif, NotifsAdapter.NotifViewHolder>(DIFF_CALLBACK) {
 
-  override fun getItemCount(): Int = notifs.size
-
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotifViewHolder {
-    val context = parent.context
-    val inflater = LayoutInflater.from(context)
-    val view = inflater.inflate(R.layout.view_notif, parent, false)
-    return NotifViewHolder(view,
-      { pos -> viewModel.openNotifDetails(notifs[pos].id) })
+  override fun onBindViewHolder(holder: NotifViewHolder, position: Int) {
+    getItem(position)?.let {
+      holder.bindTo(it)
+    }
   }
 
-  fun updateNotifsList(to: ImmutableList<Notif>) {
-    notifs = to
-    notifyDataSetChanged()
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotifViewHolder {
+    val inflater = LayoutInflater.from(parent.context)
+    val view = inflater.inflate(R.layout.view_notif, parent, false)
+    return NotifViewHolder(view) { viewModel.openNotifDetails(getItem(it)!!.id) }
   }
 
   class NotifViewHolder(
@@ -44,8 +39,15 @@ class NotifsAdapter(
 
     override fun onClick(v: View) = onClickListener(adapterPosition)
 
-    fun bind(title: String) {
-      notifNameView.text = title
+    fun bindTo(notif: Notif) {
+      notifNameView.text = notif.title
+    }
+  }
+
+  companion object {
+    val DIFF_CALLBACK = object : DiffCallback<Notif>() {
+      override fun areItemsTheSame(oldItem: Notif, newItem: Notif) = oldItem.id == newItem.id
+      override fun areContentsTheSame(oldItem: Notif, newItem: Notif) = oldItem == newItem
     }
   }
 }

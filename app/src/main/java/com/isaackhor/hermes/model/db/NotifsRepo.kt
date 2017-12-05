@@ -1,5 +1,6 @@
 package com.isaackhor.hermes.model.db
 
+import android.arch.paging.LivePagedListProvider
 import android.util.Log
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
@@ -17,6 +18,9 @@ class NotifsRepo(
   fun getAllNotifs(): Flowable<List<Notif>> {
     return db.getNotifDao().getAllNotifs()
   }
+
+  fun getAllNotifsTiled(): LivePagedListProvider<Int, Notif> =
+    db.getNotifDao().getAllNotifsTiled()
 
   fun getNotif(id: Int): Flowable<Notif> {
     return db.getNotifDao().getNotif(id)

@@ -13,7 +13,7 @@ import com.isaackhor.hermes.utils.SingletonHolder
   version = 2)
 abstract class NotifsDb : RoomDatabase() {
 
-  abstract fun getNotifDao(): NotifDao
+  abstract fun getNotifDao(): NotifsDao
   abstract fun getTagDao(): NotifTagDao
   abstract fun getNotifTagJoinDao(): NotifTagJoinDao
 
