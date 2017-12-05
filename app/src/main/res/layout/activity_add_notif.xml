@@ -75,7 +75,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
-                android:id="@+id/add_label_targets"
+                android:id="@+id/add_labelTags"
                 android:layout_below="@id/add_editContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,29 +83,10 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/add_editTargets"
+                android:id="@+id/add_editTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_label_targets"
-                android:padding="8dp"
-                android:layout_marginBottom="16dp"
-                android:text=""
-                android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:textColor="#000" />
-
-            <TextView
-                android:id="@+id/add_label_topics"
-                android:layout_below="@id/add_editTargets"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_topics"
-                android:textAppearance="@android:style/TextAppearance.Material.Small" />
-
-            <TextView
-                android:id="@+id/add_editTopics"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/add_label_topics"
+                android:layout_below="@id/add_labelTags"
                 android:padding="8dp"
                 android:layout_marginBottom="16dp"
                 android:text=""

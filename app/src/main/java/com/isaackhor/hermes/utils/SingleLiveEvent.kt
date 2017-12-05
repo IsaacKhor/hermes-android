@@ -34,5 +34,11 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
   }
 
   /* Used when T is void */
-  fun call() { value = null }
+  fun call() {
+    value = null
+  }
+
+  fun postCall() {
+    postValue(null)
+  }
 }

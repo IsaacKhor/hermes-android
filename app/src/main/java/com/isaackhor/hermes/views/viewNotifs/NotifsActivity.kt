@@ -3,16 +3,15 @@ package com.isaackhor.hermes.views.viewNotifs
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.R
-import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.utils.getViewModel
+import com.isaackhor.hermes.views.viewAddNotif.AddNotifActivity
 import com.isaackhor.hermes.views.viewNotifDetail.NotifDetailActivity
 import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.collections.immutable.immutableListOf
@@ -35,21 +34,23 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
     // Recycler view
     nt_notifsList.setHasFixedSize(true)
     nt_notifsList.layoutManager = LinearLayoutManager(this)
-    val adapter = NotifsAdapter(immutableListOf(Notif.TEST_NOTIF), viewModel)
+    val adapter = NotifsAdapter(immutableListOf(), viewModel)
     nt_notifsList.adapter = adapter
 
     viewModel.notifs.observe(this,
-        Observer { new ->
-          if (new != null)
-            adapter.updateNotifsList(new.toImmutableList()) })
+      Observer { new ->
+        if (new != null)
+          adapter.updateNotifsList(new.toImmutableList())
+      })
 
     // Swipe refresh view
     nt_swipeRefresh.setOnRefreshListener { viewModel.loadNotifs(true, true) }
 
     viewModel.dataLoading.observe(this,
-        Observer { isLoading ->
-          if (isLoading != null)
-            nt_swipeRefresh.isRefreshing = isLoading })
+      Observer { isLoading ->
+        if (isLoading != null)
+          nt_swipeRefresh.isRefreshing = isLoading
+      })
 
     // Toolbar
     setSupportActionBar(findViewById(R.id.main_toolbar))
@@ -70,7 +71,7 @@ class NotifsActivity : AppCompatActivity(), LifecycleOwner {
   }
 
   private fun showNotifDetails(notifId: Int?) {
-    if(notifId == null) {
+    if (notifId == null) {
       Log.w("NotifsActivity", "Trying to show notif without id; this shouldn't happen")
       return
     }

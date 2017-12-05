@@ -4,19 +4,21 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import com.isaackhor.hermes.model.Notif
-import com.isaackhor.hermes.model.NotifTopic
-import com.isaackhor.hermes.source.NotifsRepo
+import com.isaackhor.hermes.model.NotifTag
+import com.isaackhor.hermes.model.db.NotifsRepo
 import com.isaackhor.hermes.utils.SingleLiveEvent
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 class NotifsViewModel(
-    private val repo: NotifsRepo
-): ViewModel() {
+  private val repo: NotifsRepo
+) : ViewModel() {
   var notifs = MutableLiveData<List<Notif>>()
 
   val filteredNotifs = MutableLiveData<List<Notif>>()
   val filterMode = MutableLiveData<FilterMode>()
   val filterTargets = MutableLiveData<List<Target>>()
-  val filterTopics = MutableLiveData<List<NotifTopic>>()
+  val filterTopics = MutableLiveData<List<NotifTag>>()
 
   val openNotifDetailsEvent = SingleLiveEvent<Int>() // Int is notifId
   val newNotifEvent = SingleLiveEvent<Void>()
@@ -26,7 +28,9 @@ class NotifsViewModel(
 
   init {
     filterMode.value = FilterMode.TARGET
-    repo.getNotifs().subscribe { n -> notifs.value = n }
+    repo.getAllNotifs()
+      .subscribeOn(Schedulers.io())
+      .subscribeBy(onSuccess = {notifs.postValue(it)})
     dataLoading.value = false
   }
 
@@ -35,7 +39,10 @@ class NotifsViewModel(
     //TODO setup snackbar message on error
 //    if (forceFetch) repo?.fetchRemote()?.subscribe() { _ -> snackbarMsg.value = "Error" }
 
-    repo.getNotifs().subscribe { res ->
+    repo
+      .getAllNotifs()
+      .subscribeOn(Schedulers.io())
+      .subscribe { res ->
       Log.i("NotifsViewModel", "Loading data success")
       notifs.postValue(res)
       // TODO implement filtering

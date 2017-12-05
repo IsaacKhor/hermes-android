@@ -10,11 +10,11 @@ import com.isaackhor.hermes.model.Notif
 import kotlinx.collections.immutable.ImmutableList
 
 class NotifsAdapter(
-    private var notifs: ImmutableList<Notif>,
-    private var viewModel: NotifsViewModel
+  private var notifs: ImmutableList<Notif>,
+  private var viewModel: NotifsViewModel
 ) : RecyclerView.Adapter<NotifsAdapter.NotifViewHolder>() {
   override fun onBindViewHolder(holder: NotifViewHolder, position: Int) =
-      holder.bind(notifs[position].title)
+    holder.bind(notifs[position].title)
 
   override fun getItemCount(): Int = notifs.size
 
@@ -23,7 +23,7 @@ class NotifsAdapter(
     val inflater = LayoutInflater.from(context)
     val view = inflater.inflate(R.layout.view_notif, parent, false)
     return NotifViewHolder(view,
-        { pos -> viewModel.openNotifDetails(notifs[pos].id) })
+      { pos -> viewModel.openNotifDetails(notifs[pos].id) })
   }
 
   fun updateNotifsList(to: ImmutableList<Notif>) {
@@ -32,16 +32,20 @@ class NotifsAdapter(
   }
 
   class NotifViewHolder(
-      view: View,
-      private val onClickListener: (Int) -> Unit
+    view: View,
+    private val onClickListener: (Int) -> Unit
   ) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     private val notifNameView: TextView = view.findViewById(R.id.notif_row_title)
 
-    init { notifNameView.setOnClickListener(this) }
+    init {
+      notifNameView.setOnClickListener(this)
+    }
 
     override fun onClick(v: View) = onClickListener(adapterPosition)
 
-    fun bind(title: String) { notifNameView.text = title }
+    fun bind(title: String) {
+      notifNameView.text = title
+    }
   }
 }

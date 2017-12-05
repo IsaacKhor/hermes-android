@@ -3,52 +3,54 @@ package com.isaackhor.hermes.views.viewAddNotif
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.R
-import com.isaackhor.hermes.model.LimboNotif
-import com.isaackhor.hermes.model.NotifTarget
-import com.isaackhor.hermes.model.NotifTopic
-import com.isaackhor.hermes.source.NotifsRepo
+import com.isaackhor.hermes.model.Notif
+import com.isaackhor.hermes.model.NotifTag
+import com.isaackhor.hermes.model.db.NotifsRepo
 import com.isaackhor.hermes.utils.SingleLiveEvent
-import io.reactivex.rxkotlin.mergeAllSingles
-import io.reactivex.rxkotlin.toObservable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import kotlinx.collections.immutable.toImmutableList
 
 class AddNotifViewModel(
-    private val repo: NotifsRepo
+  private val repo: NotifsRepo
 ) : ViewModel() {
   val title = MutableLiveData<String>()
   val content = MutableLiveData<String>()
-  val targets = MutableLiveData<List<NotifTarget>>()
-  val topics = MutableLiveData<List<NotifTopic>>()
-
-  val onNewNotifEvent = SingleLiveEvent<LimboNotif>()
+  val tags = MutableLiveData<List<NotifTag>>()
   val snackbarMsg = SingleLiveEvent<Int>()
+  val isSendingNotif = MutableLiveData<Boolean>().also { it.value = false }
+  val onNotifSendSuccess = SingleLiveEvent<Notif>()
+
+  private val disposable = CompositeDisposable()
 
   fun addNewNotif() {
-    onNewNotifEvent.value =
-        LimboNotif(
-            title.value ?: "No title",
-            content.value ?: "No content",
-            targets.value ?: listOf(),
-            topics.value ?: listOf())
+    isSendingNotif.value = true
+    repo.addNotif(
+      title.value ?: "No title",
+      content.value ?: "",
+      tags.value ?: listOf())
+      .subscribeBy(
+        onSuccess = { onNotifSendSuccess.postValue(it) },
+        onError = {
+          isSendingNotif.value = false
+          snackbarMsg.value = R.string.send_notif_fail
+        })
+      .addTo(disposable)
   }
 
-  fun setNewTopicsFromId(ids: List<Int>) {
-    ids.map { repo.getTopic(it) }
-        .toObservable()
-        .mergeAllSingles()
-        .toList()
-        .subscribe(
-            { topics.postValue(it.toImmutableList()) },
-            { snackbarMsg.postValue(R.string.retrieve_topics_fail) })
+  fun setNewTagsFromId(ids: List<Int>) {
+    repo.getTags(ids)
+      .subscribeOn(Schedulers.io())
+      .subscribeBy(
+        onSuccess = { tags.postValue(it.toImmutableList()) },
+        onError = { snackbarMsg.postValue(R.string.retrieve_topics_fail) })
+      .addTo(disposable)
   }
 
-  fun setNewTargetsFromId(ids: List<Int>) {
-    ids.map { repo.getTarget(it) }
-        .toObservable()
-        .mergeAllSingles()
-        .toList()
-        .subscribe(
-            { targets.postValue(it.toImmutableList()) },
-            { snackbarMsg.postValue(R.string.retrieve_targets_fail) })
+  override fun onCleared() {
+    disposable.dispose()
+    super.onCleared()
   }
 }

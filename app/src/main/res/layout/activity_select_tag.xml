@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.isaackhor.hermes.views.viewSelectTT.SelectTTActivity">
+    tools:context="com.isaackhor.hermes.views.viewSelectTag.SelectTagActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <ListView
-        android:id="@+id/stt_listTargets"
+        android:id="@+id/stt_listTags"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

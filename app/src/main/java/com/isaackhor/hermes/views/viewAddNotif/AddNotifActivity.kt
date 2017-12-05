@@ -4,15 +4,15 @@ import android.app.Activity
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.isaackhor.hermes.R
-import com.isaackhor.hermes.model.LimboNotif
+import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.utils.*
-import com.isaackhor.hermes.views.viewSelectTT.SelectTTActivity
+import com.isaackhor.hermes.views.viewSelectTag.SelectTagActivity
 import kotlinx.android.synthetic.main.activity_add_notif.*
 
 class AddNotifActivity : AppCompatActivity() {
@@ -34,43 +34,47 @@ class AddNotifActivity : AppCompatActivity() {
       onEditTextChanged(add_editTitle) { s -> title.value = s }
       onEditTextChanged(add_editContent) { s -> content.value = s }
 
-      // Show a 'click here to add more' msg when targets/topics is blank
-      obsListToStr(targets, R.string.label_empty_tt_list,
-          { it.name }, { add_editTargets.text = it })
-      obsListToStr(topics, R.string.label_empty_tt_list,
-          { it.name }, { add_editTopics.text = it })
+      // Show a 'click here to add more' msg when targets/tags is blank
+      obsListToStr(tags, R.string.label_empty_tt_list,
+        { it.name }, { add_editTags.text = it })
 
-      // Force event to fire on load
-      targets.value = listOf()
-      topics.value = listOf()
+      // Force the event to fire on load
+      tags.value = listOf()
     }
 
-    viewModel.onNewNotifEvent.observe(this, Observer { ln -> returnRes(ln!!) })
+    viewModel.onNotifSendSuccess.observe(this) { it?.let { onNotifAdded(it) } }
 
     // Show detail selection activity on click
-    add_editTargets.setOnClickListener { addTT(REQ_TARGET) }
-    add_editTopics.setOnClickListener { addTT(REQ_TOPIC) }
+    add_editTags.setOnClickListener { selectTags() }
 
     // Snackbar
+    // This snackbar is used for the 'sending notif to server msg'
+    setupStatusSnackbar(this, viewModel.isSendingNotif,
+      R.string.sending_notif_msg)
+
+    // This snackbar is used for all other messages
     setupSnackbar(this, viewModel.snackbarMsg, Snackbar.LENGTH_LONG)
   }
 
-  private fun addTT(mode: Int) {
-    val intent = Intent(this, SelectTTActivity::class.java)
-    val pm = if(mode == REQ_TOPIC) SelectTTActivity.MODE_TOPIC else SelectTTActivity.MODE_TARGET
-    intent.putExtra(SelectTTActivity.MODE_ARGKEY, pm)
-    startActivityForResult(intent, mode)
+  private fun onNotifAdded(notif: Notif) {
+    val intent = Intent()
+    intent.putExtra(NEW_NOTIF_ID, notif.id)
+    setResult(Activity.RESULT_OK, intent)
+    finish()
   }
 
+  private fun selectTags() {
+    val intent = Intent(this, SelectTagActivity::class.java)
+    startActivityForResult(intent, 0)
+  }
+
+  /*
+   * Parses information from SelectTagActivity
+   */
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (resultCode == Activity.RESULT_CANCELED || data == null) return
-    val res = data.getIntArrayExtra(SelectTTActivity.RESULT_IDS).toList()
-
-    when(requestCode) {
-      REQ_TARGET -> viewModel.setNewTargetsFromId(res)
-      REQ_TOPIC -> viewModel.setNewTopicsFromId(res)
-      else -> throw IllegalArgumentException("Illegal requestCode: $requestCode")
-    }
+    val res = data.getIntArrayExtra(SelectTagActivity.RESULT_IDS).toList()
+    viewModel.setNewTagsFromId(res)
   }
 
   private fun <T> obsListToStr(list: LiveData<List<T>>, emptyStrId: Int,
@@ -82,10 +86,6 @@ class AddNotifActivity : AppCompatActivity() {
       }
       g(s)
     })
-  }
-
-  private fun returnRes(notif: LimboNotif) {
-    val ret = Intent()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,7 +106,6 @@ class AddNotifActivity : AppCompatActivity() {
   }
 
   companion object {
-    val REQ_TARGET = 1
-    val REQ_TOPIC = 2
+    val NEW_NOTIF_ID = "new_notif_id"
   }
 }

@@ -70,7 +70,7 @@
                 android:textColor="@android:color/black" />
 
             <TextView
-                android:id="@+id/detail_label_targets"
+                android:id="@+id/dt_label_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -78,26 +78,10 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
             <TextView
-                android:id="@+id/dt_editTargets"
+                android:id="@+id/dt_editTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text=""
-                android:textAppearance="@android:style/TextAppearance.Material.Medium"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/detail_label_groups"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/label_topics"
-                android:textAppearance="@android:style/TextAppearance.Material.Small" />
-
-            <TextView
-                android:id="@+id/dt_editTopics"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text=""
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"
                 android:textColor="@android:color/black" />
