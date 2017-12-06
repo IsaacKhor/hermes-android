@@ -3,7 +3,7 @@ package com.isaackhor.hermes.utils
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.isaackhor.hermes.model.db.NotifsApi
+import com.isaackhor.hermes.model.remote.NotifsApi
 import com.isaackhor.hermes.model.db.NotifsDb
 import com.isaackhor.hermes.model.db.NotifsRepo
 import com.isaackhor.hermes.views.viewAddNotif.AddNotifViewModel

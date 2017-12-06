@@ -1,11 +1,10 @@
 package com.isaackhor.hermes.model.db
 
-import android.arch.paging.LivePagedListProvider
 import android.util.Log
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
+import com.isaackhor.hermes.model.remote.NotifsApi
 import com.isaackhor.hermes.utils.ioThread
-import io.reactivex.Flowable
 import io.reactivex.Single
 
 class NotifsRepo(
@@ -15,16 +14,17 @@ class NotifsRepo(
   private var notifsId = 100
   private var tagsId = 100
 
-  fun getAllNotifs(): Flowable<List<Notif>> {
-    return db.getNotifDao().getAllNotifs()
-  }
+  fun getAllNotifs() = db.getNotifDao().getAllNotifs()
+  fun getAllNotifsTiled() = db.getNotifDao().getAllNotifsTiled()
+  fun getNotif(id: Int) = db.getNotifDao().getNotif(id)
 
-  fun getAllNotifsTiled(): LivePagedListProvider<Int, Notif> =
-    db.getNotifDao().getAllNotifsTiled()
+  fun getAllTags() = db.getTagDao().getAllTags()
+  fun getTag(id: Int) = db.getTagDao().getTag(id)
+  fun getTags(ids: List<Int>) = db.getTagDao().getTags(ids)
 
-  fun getNotif(id: Int): Flowable<Notif> {
-    return db.getNotifDao().getNotif(id)
-  }
+  fun getTagsForNotif(notif: Notif) = db.getNotifTagJoinDao().getTagsForNotif(notif.id)
+  fun fetchRemote() = remoteApi.retrieveNewNotifs()
+  fun refreshTags() = remoteApi.fetchTags()
 
   fun addNotif(title: String, content: String, tags: List<NotifTag>): Single<Notif> {
     val tagJoins = tags.map { NotifTagJoin(notifsId, it.id) }
@@ -41,18 +41,6 @@ class NotifsRepo(
     return Single.just(notif)
   }
 
-  fun getAllTags(): Flowable<List<NotifTag>> {
-    return db.getTagDao().getAllTags()
-  }
-
-  fun getTag(id: Int): Flowable<NotifTag> {
-    return db.getTagDao().getTag(id)
-  }
-
-  fun getTags(ids: List<Int>): Flowable<List<NotifTag>> {
-    return db.getTagDao().getTags(ids)
-  }
-
   fun addTag(name: String): Single<NotifTag> {
     val tag = NotifTag(tagsId, name)
     ioThread { db.getTagDao().insert(listOf(tag)) }
@@ -60,14 +48,6 @@ class NotifsRepo(
     Log.i("NotifsRepo", "Inserting tag: $name")
 
     return Single.just(tag)
-  }
-
-  fun getTagsForNotif(notif: Notif): Flowable<List<NotifTag>> {
-    return db.getNotifTagJoinDao().getTagsForNotif(notif.id)
-  }
-
-  fun fetchRemote(): Single<Unit> {
-    return remoteApi.fetch()
   }
 
   fun nukeEverything() {
