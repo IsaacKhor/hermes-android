@@ -34,8 +34,8 @@ class AddNotifViewModel(
       .subscribeBy(
         onSuccess = { onNotifSendSuccess.postValue(it) },
         onError = {
-          isSendingNotif.value = false
-          snackbarMsg.value = R.string.send_notif_fail
+          isSendingNotif.postValue(false)
+          snackbarMsg.postValue(R.string.send_notif_fail)
         })
       .addTo(disposable)
   }
