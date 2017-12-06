@@ -1,8 +1,10 @@
 package com.isaackhor.hermes.model.db
 
+import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.migration.Migration
 import android.content.Context
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
@@ -10,7 +12,7 @@ import com.isaackhor.hermes.utils.SingletonHolder
 
 @Database(
   entities = [NotifTagJoin::class, Notif::class, NotifTag::class],
-  version = 2)
+  version = 3)
 abstract class NotifsDb : RoomDatabase() {
 
   abstract fun getNotifDao(): NotifsDao
