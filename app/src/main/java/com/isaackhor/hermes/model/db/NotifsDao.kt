@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.isaackhor.hermes.model.Notif
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao

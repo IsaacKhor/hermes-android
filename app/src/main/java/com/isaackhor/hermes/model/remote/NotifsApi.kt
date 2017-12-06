@@ -11,8 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 class NotifsApi {
-  var id = 100
-
   private val authInterceptor = Interceptor { chain ->
     val orig = chain.request()
     val req = orig.newBuilder().header("Authorization", CRED)

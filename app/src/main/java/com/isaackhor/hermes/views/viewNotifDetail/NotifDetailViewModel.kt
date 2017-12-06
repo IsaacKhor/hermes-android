@@ -5,6 +5,8 @@ import android.arch.lifecycle.ViewModel
 import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
 import com.isaackhor.hermes.model.db.NotifsRepo
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
@@ -12,18 +14,19 @@ import io.reactivex.schedulers.Schedulers
 class NotifDetailViewModel(
   private val repo: NotifsRepo
 ) : ViewModel() {
-  private var notifId = 0
   val notif = MutableLiveData<Notif>()
   val tags = MutableLiveData<List<NotifTag>>()
 
+  private val disposable = CompositeDisposable()
+
   fun setId(id: Int) {
-    notifId = id
     repo.getNotif(id)
       .subscribeOn(Schedulers.io())
-      .subscribeBy {
-        notif.postValue(it)
-        repo.getTagsForNotif(it)
-          .subscribeBy { tags.postValue(it) }
-      }
+      .doOnNext { notif.postValue(it) }
+      .flatMap { repo.getTagsForNotif(it) }
+      .subscribeBy { tags.postValue(it) }
+      .addTo(disposable)
   }
+
+  override fun onCleared() = disposable.dispose()
 }

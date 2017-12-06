@@ -11,16 +11,16 @@ import retrofit2.http.*
 interface NotifsService {
 
   @GET("/notifs")
-  fun getNotifsAfterId(@Query("after") id: Int): Single<List<Notif>>
+  fun getNotifsAfterId(@Query("after") id: Int): Single<List<ApiRetNotif>>
 
   @GET("/notifs?after=0")
-  fun getAllNotifs(): Single<List<Notif>>
+  fun getAllNotifs(): Single<List<ApiRetNotif>>
 
   @GET("/notifs/{id}")
-  fun getNotifWithId(@Path("id") notifId: Int): Maybe<Notif>
+  fun getNotifWithId(@Path("id") notifId: Int): Maybe<ApiRetNotif>
 
   @POST("/notifs")
-  fun addNotif(@Body notif: ApiNotif): Single<Notif>
+  fun addNotif(@Body notif: ApiNotif): Single<ApiRetNotif>
 
   @GET("/tags")
   fun getAllTags(): Single<List<NotifTag>>

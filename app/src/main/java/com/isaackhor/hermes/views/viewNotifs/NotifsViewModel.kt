@@ -35,7 +35,7 @@ class NotifsViewModel(
     if (showLoadingUi) dataLoading.value = true
 
     repo.fetchRemote().subscribeBy(
-      onSuccess = { dataLoading.postValue(false) },
+      onComplete = { dataLoading.postValue(false) },
       onError = {
         snackbar.postValue(R.string.retrieve_notifs_fail)
         dataLoading.postValue(false)

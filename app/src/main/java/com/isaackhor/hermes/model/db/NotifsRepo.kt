@@ -5,14 +5,17 @@ import com.isaackhor.hermes.model.Notif
 import com.isaackhor.hermes.model.NotifTag
 import com.isaackhor.hermes.model.remote.NotifsApi
 import com.isaackhor.hermes.utils.ioThread
+import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.rxkotlin.subscribeBy
 
 class NotifsRepo(
   private val db: NotifsDb,
   private val remoteApi: NotifsApi
 ) {
-  private var notifsId = 100
-  private var tagsId = 100
+  private var notifsId = 0
+  private var tagsId = 0
+  private val service = remoteApi.service
 
   fun getAllNotifs() = db.getNotifDao().getAllNotifs()
   fun getAllNotifsTiled() = db.getNotifDao().getAllNotifsTiled()
@@ -23,8 +26,19 @@ class NotifsRepo(
   fun getTags(ids: List<Int>) = db.getTagDao().getTags(ids)
 
   fun getTagsForNotif(notif: Notif) = db.getNotifTagJoinDao().getTagsForNotif(notif.id)
-  fun fetchRemote() = remoteApi.retrieveNewNotifs()
-  fun refreshTags() = remoteApi.fetchTags()
+
+  fun fetchRemote(): Completable {
+    return service.getNotifsAfterId(notifsId)
+      .doOnSuccess { notifs ->
+        val nt = notifs.map { Notif(it.id, it.title, it.content) }
+        db.getNotifDao().insert(nt)
+
+        // Connect notif <-> tag
+        val map = notifs.flatMap { n -> n.tags.map { t -> NotifTagJoin(n.id, t) } }
+        db.getNotifTagJoinDao().insert(map)
+      }
+      .toCompletable()
+  }
 
   fun addNotif(title: String, content: String, tags: List<NotifTag>): Single<Notif> {
     val tagJoins = tags.map { NotifTagJoin(notifsId, it.id) }

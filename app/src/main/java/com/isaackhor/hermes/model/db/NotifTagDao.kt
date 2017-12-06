@@ -2,6 +2,7 @@ package com.isaackhor.hermes.model.db
 
 import android.arch.persistence.room.*
 import com.isaackhor.hermes.model.NotifTag
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
